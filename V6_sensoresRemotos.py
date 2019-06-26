@@ -6,6 +6,7 @@ arcpy.env.overwriteOutput = True
 
 class remoteSensing(object):
     def __init__(self):
+        self.msg = Messages()
         self.gdb = arcpy.GetParameterAsText(0)
         self.arcillas = arcpy.GetParameterAsText(1)
         self.oxidos = arcpy.GetParameterAsText(2)
@@ -57,11 +58,14 @@ class remoteSensing(object):
         arcpy.DeleteField_management(union, ["FID_arcillas", "FID_oxidos"])
         arcpy.Append_management(union, os.path.join(self.gdb, self.dataset, self.feature), "NO_TEST")
         arcpy.SetParameterAsText(3, os.path.join(self.gdb, self.dataset, self.feature))
+        arcpy.AddMessage("  {}...".format(self.msg.updateinfo))
 
     def main(self):
+        arcpy.AddMessage("\n {}: {}... ".format(self.msg.evaluateGdb, os.path.basename(self.gdb)))
+        self.preprocess()
         self.modificarCampos()
         self.unionCapas()
-
+        arcpy.AddMessage(" {} \n".format(self.msg.finish))
 
 if __name__ == "__main__":
     poo = remoteSensing()

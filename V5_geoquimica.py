@@ -1,5 +1,5 @@
 import arcpy
-import os
+from config import *
 from messages import Messages
 
 arcpy.env.overwriteOutput = True
@@ -13,7 +13,6 @@ class geoquimica(object):
 
     def main(self):
         arcpy.AddMessage("\n {}: {}... ".format(self.msg.evaluateGdb, os.path.basename(self.ws)))
-
         try:
             desc = arcpy.Describe(self.ws)
             if desc.datatype == u'Workspace':

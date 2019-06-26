@@ -1,0 +1,22 @@
+class Messages(object):
+    evaluate = "Evaluando el campo '{}'"
+    nullidentify = "Identificando valores nulos"
+    updateinfo = "Realizando la carga de information"
+    updateok = "La carga de information concluyo correctamente"
+    finish = "Proceso finalizado"
+    incorrectfield = "Campo '{}' | El valor ingresado no es correcto"
+    nullvalue = "El valor ingresado es nulo"
+    wsincorrect = "El espacio de trabajo agregado no es correcto o el feature class {} no existe"
+    wsunexist = "El espacio de trabajo agregado no es el correcto"
+    makeerror = "Sucedio un error, vuelve a intertarlo."
+    evaluateGdb = "Evaluando la existencia de la GeodataBase"
+    unlicencedSA = "La licencia 'Spatial Analyst' no esta disponible en estos momentos"
+    exportRaster = 'Exportando a formato raster'
+    reviewFields = 'Determinando el grado y valores'
+    exists = 'Verificando existencia'
+    ponderacion = 'Realizando ponderacion'
+    potMinero = 'Determinando el Potencial Minero'
+    exportMap = '\n Exportando resultados como MXD y PDF'
+    publishFinal = '\n Publicando resultados finales'
+    error = "Error..."
+    warning = "Warning"
