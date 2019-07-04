@@ -22,8 +22,8 @@ limitePoligonal = os.path.join(ws, ds_insumos, cuadrante) if os.path.exists(
     os.path.join(ws, ds_insumos, cuadrante)) else os.path.join(ws, ds_insumos, region)
 controlador = []
 
-sistReferencia = arcpy.Describe(os.path.join(ws, ds_insumos)).spatialReference
-arcpy.env.outputCoordinateSystem = sistReferencia
+crs = arcpy.Describe(os.path.join(ws, ds_insumos)).spatialReference
+arcpy.env.outputCoordinateSystem = crs
 
 # Funciones
 
@@ -210,7 +210,7 @@ def calcularPotencialMinero(ws=ws):
     potencialMinero.save(os.path.join(ws, potMinero_ras))
     # arcpy.CheckInExtension("spatial")
 
-    arcpy.env.outputCoordinateSystem = sistReferencia
+    arcpy.env.outputCoordinateSystem = crs
 
 # Iniciar exportacion de mapas
 

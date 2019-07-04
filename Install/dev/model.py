@@ -24,12 +24,15 @@ directoryStructure = {
             },
             "catastro": {
                 "fcname": "GPO_CMI_CATASTRO_MINERO_G84"
+            },
+            "vias": {
+                "fcname": "DATA_GIS.IGN_TRA_VIAS"
             }
         },
         "sqlSpatial": {
             "fieldSelect": "OBJECTID, SHAPE, LEYENDA, NATURALEZA",
             "fromfc": "GPO_CMI_CATASTRO_MINERO_G84",
-            "where": "(LEYENDA = 'TITULADO') AND (NATURALEZA = 'M')",
+            "where": "(LEYENDA = 'TITULADO') AND (NATURALEZA = '{}')",
             "uniqueField": "OBJECTID"
         }
     },
@@ -44,6 +47,7 @@ directoryStructure = {
         "fcs": {
             "region": "PM_V0_Region",
             "catastro": "PM_V0_CatastroMinero",
+            "vias": "PM_V0_Vias",
             "geologia": "PM_V1_UnidadesGeologicas",
             "fallas": "PM_V3_FallasGeologicas",
             "depositos": "PM_V4_DepositosMinerales",

@@ -12,7 +12,7 @@ __status__ = 'Development'
 
 BASE_DIR = os.path.dirname(__file__)
 STATIC = os.path.join(BASE_DIR, "static")
-TBX = os.path.join(BASE_DIR, "tbx\\PotencialMinerov1.tbx")
+TBX = os.path.join(BASE_DIR, "tbx\\PotencialMinero.tbx")
 
 CONN = os.path.join(BASE_DIR, "conn\\bdgeocat_publ_gis.sde")
 
