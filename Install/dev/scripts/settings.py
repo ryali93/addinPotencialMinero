@@ -11,12 +11,20 @@ GDB_TEMPLATE = os.path.join(STATIC, 'gdb')
 TBX = os.path.join(STATIC, 'tbx\\PotencialMinero.tbx')
 TOOL_NAME = {
     'T01': 'EstructuraDirectorio',
-    'T02': 'unidadesGeologicas',
-    'T03': 'fallasGeologicas',
-    'T04': 'depositosMinerales',
-    'T05': 'geoquimica',
-    'T06': 'sensoresRemotos',
-    'T07': 'PotencialMinero',
+
+    'T02': 'pmmUnidadesGeologicas',
+    'T03': 'pmmFallasGeologicas',
+    'T04': 'pmmDepositosMinerales',
+    'T05': 'pmmGeoquimica',
+    'T06': 'pmmSensoresRemotos',
+    'T07': 'PotencialMineroMetalico',
+
+    'T08': 'rmiLitologia',
+    'T09': 'rmiSustancias',
+    'T10': 'rmiConcesiones',
+    'T11': 'rmiSensoresRemotos',
+    'T12': 'rmiAccesos',
+    'T13': 'PotencialMineroNoMetalico'
 }
 USER_GUIDE = os.path.join(STATIC, 'potencial-minero-user-guide.pdf')
 

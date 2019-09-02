@@ -14,7 +14,7 @@ class Messages(object):
     error_gdb_type = u'El tipo de espacio de trabajo agregado no es correcto'
     error_info = u'Se detectaron registros incorrectos'
 
-    """ Calculo del Potencial Minero """
+    """ Calculo del Potencial Minero Metalico """
 
     eval_ug = u'\n\t1. Evaluación de variable de Unidades Geológicas'
 
@@ -39,3 +39,9 @@ class Messages(object):
     gen_task_limites = u'\t   - Configurando límites en base a la región'
     gen_task_save_fc = u'\t   - Almacenando resultado como Feature Class en el File Geodatabase'
     gen_task_save_ra = u'\t   - Almacenando resultado como Raster Dataset en el File Geodatabase'
+
+    """ Calculo del Potencial Minero No Metalico """
+
+    eval_vias = u'\n\t3. Evaluación de variable de Accesos'
+    eval_vias_task_radio = u'\t   - Estimando el radio de influencia para cada vía'
+    eval_vias_task_influencia = u'\t   - Calculando las zonas de influencia'

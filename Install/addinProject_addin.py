@@ -23,8 +23,10 @@ class iniciarSesion(object):
         pass
 
 
-class V1_unidadesGeologicas(object):
-    """Implementation for addinProject_addin.unidadesGeologicas (Button)"""
+# Potencial Minero Metalico
+
+class pmmUnidadesGeologicas(object):
+    """Implementation for addinProject_addin.pmmUnidadesGeologicas (Button)"""
 
     def __init__(self):
         self.enabled = True
@@ -34,8 +36,8 @@ class V1_unidadesGeologicas(object):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T02'])
 
 
-class V3_fallasGeologicas(object):
-    """Implementation for addinProject_addin.fallasGeologicas (Button)"""
+class pmmFallasGeologicas(object):
+    """Implementation for addinProject_addin.pmmFallasGeologicas (Button)"""
 
     def __init__(self):
         self.enabled = True
@@ -45,8 +47,8 @@ class V3_fallasGeologicas(object):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T03'])
 
 
-class V4_depositosMinerales(object):
-    """Implementation for addinProject_addin.depositosMinerales (Button)"""
+class pmmDepositosMinerales(object):
+    """Implementation for addinProject_addin.pmmDepositosMinerales (Button)"""
 
     def __init__(self):
         self.enabled = True
@@ -56,8 +58,8 @@ class V4_depositosMinerales(object):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T04'])
 
 
-class V5_geoquimica(object):
-    """Implementation for addinProject_addin.geoquimica (Button)"""
+class pmmGeoquimica(object):
+    """Implementation for addinProject_addin.pmmGeoquimica (Button)"""
 
     def __init__(self):
         self.enabled = True
@@ -67,8 +69,8 @@ class V5_geoquimica(object):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T05'])
 
 
-class V6_SesoresRemotos(object):
-    """Implementation for addinProject_addin.sesoresRemotos (Button)"""
+class pmmSensoresRemotos(object):
+    """Implementation for addinProject_addin.pmmSensoresRemotos (Button)"""
 
     def __init__(self):
         self.enabled = True
@@ -76,6 +78,85 @@ class V6_SesoresRemotos(object):
 
     def onClick(self):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T06'])
+
+
+class PotencialMineroMetalico(object):
+    """Implementation for addinProject_addin.PotencialMineroMetalico (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T07'])
+
+
+# Potencial Minero No Metalico
+
+class rmiLitologia(object):
+    """Implementation for addinProject_addin.rmiLitologia (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T08'])
+
+
+class rmiSustancias(object):
+    """Implementation for addinProject_addin.rmiSustancias (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T09'])
+
+
+class rmiConcesiones(object):
+    """Implementation for addinProject_addin.rmiConcesiones (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T10'])
+
+
+class rmiSensoresRemotos(object):
+    """Implementation for addinProject_addin.rmiSensoreRremotos (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T11'])
+
+
+class rmiAccesos(object):
+    """Implementation for addinProject_addin.rmiAccesos (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T12'])
+
+
+class PotencialMineroNoMetalico(object):
+    """Implementation for addinProject_addin.PotencialMineroNoMetalico (Button)"""
+
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T13'])
 
 
 class crearDirectorioTrabajo(object):
@@ -87,17 +168,6 @@ class crearDirectorioTrabajo(object):
 
     def onClick(self):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T01'])
-
-
-class potencialMinero(object):
-    """Implementation for addinProject_addin.potencialMinero (Button)"""
-
-    def __init__(self):
-        self.enabled = True
-        self.checked = False
-
-    def onClick(self):
-        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T07'])
 
 
 def OpenBrowserURL():

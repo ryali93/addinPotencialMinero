@@ -6,7 +6,7 @@ from nls import *
 arcpy.env.overwriteOutput = True
 
 
-class PotencialMinero(object):
+class PotencialMineroMetalico(object):
 
     ws = arcpy.GetParameterAsText(0)
     pixel = arcpy.GetParameterAsText(1)
@@ -312,6 +312,6 @@ class PotencialMinero(object):
 
 
 if __name__ == '__main__':
-    poo = PotencialMinero()
+    poo = PotencialMineroMetalico()
     arcpy.env.outputCoordinateSystem = poo.src
     poo.main()
