@@ -1,6 +1,6 @@
 import sys
 
-sys.path.insert(0, r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminero')
+sys.path.insert(0, r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminerodev')
 
 import pythonaddins
 import threading

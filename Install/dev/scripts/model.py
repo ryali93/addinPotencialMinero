@@ -136,13 +136,13 @@ class gpo_unidad_geologica(object):
     """
     FEATURE CLASS DE UNIDADES GEOLOGICAS EN EL FILE GEODATABASE
     """
-    codi        = "CODI"
-    nombre      = "NOMBRE"
+    codi = "CODI"
+    nombre = "NOMBRE"
     descripcion = "DESCRIPCION"
-    unidad      = "UNIDAD"
-    grado       = "GRADO"
-    valor       = "VALOR"
-    condicion   = "CONDICION"
+    unidad = "UNIDAD"
+    grado = "GRADO"
+    valor = "VALOR"
+    condicion = "CONDICION"
 
     def __init__(self, ws):
         self.ws = ws
@@ -409,10 +409,10 @@ class ras_potencial_minero(ras_unidad_geologica):
 
 
 class tb_cm_grado(object):
-    leyenda   = 'LEYENDA'
+    leyenda = 'LEYENDA'
     condicion = 'CONDICION'
-    grado     = 'GRADO'
-    valor     = 'VALOR'
+    grado = 'GRADO'
+    valor = 'VALOR'
 
     def __init__(self, ws):
         self.ws = ws
@@ -477,7 +477,7 @@ class tb_pm_factor(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
+########################################################################
 # Potencial Minero No Metalico
 
 class gpl_vias(object):
@@ -504,7 +504,7 @@ class gpl_vias(object):
         return os.path.join(CONN, self.dataset, self.name)
 
 
-class rmi_gpl_accesos(object):
+class rmi_accesos(object):
     """
     FEATURE CLASS DE ACCESOS EN EL FILE GEODATABASE
     """

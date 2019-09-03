@@ -79,7 +79,7 @@ class PotencialMineroNoMetalico(object):
 
         vias_tipo = [i for i in arcpy.da.SearchCursor(tb_vias.path, fields_vias_tipo)]
 
-        # arcpy.AddMessage(self.messages.eval_fg_task_radio)
+        arcpy.AddMessage(self.messages.eval_fg_task_radio)
         # with arcpy.da.UpdateCursor(feature, fields) as cursor:
         #     for i in cursor:
         #         i[2] = i[0]

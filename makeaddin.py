@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import re
 import zipfile
@@ -28,3 +29,12 @@ with zipfile.ZipFile(out_zip_name, 'w', zipfile.ZIP_DEFLATED) as zip_file:
                 found_file = True
             if not found_file:
                 zip_file.writestr(os.path.join(archive_path, 'placeholder.txt'), "(Empty directory)")
+
+
+import subprocess
+
+repo_folder=os.path.join(os.path.dirname(__file__), r"Install\dev\scripts")
+repo_prod=r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminerodev'
+
+print("xcopy {} {} /Y".format(repo_folder, repo_prod))
+subprocess.call("xcopy {} {} /Y".format(repo_folder, repo_prod), shell=False)

@@ -33,7 +33,7 @@ class MakeGdb(object):
     def need_features(self):
         self.dep = pm_region(self.output_path_gdb)
         self.cat = pm_catastro_minero(self.output_path_gdb)
-        self.via = pm_vias(self.output_path_gdb)
+        self.via = rmi_accesos(self.output_path_gdb)
 
     def limit_region(self):
         dep = gpo_dep_departamento()
@@ -43,12 +43,14 @@ class MakeGdb(object):
 
     def catastro_mine(self):
         cat = gpo_cmi_catastro_minero()
-        query = "%s = 'TITULADO' AND (%s = 'M')" % (cat.leyenda, cat.naturaleza)
+        if self.type_pot == "Metalico":
+            query = "%s = 'TITULADO' AND (%s = 'M')" % (cat.leyenda, cat.naturaleza)
+        else:
+            query = "%s = 'TITULADO' AND (%s = 'N')" % (cat.leyenda, cat.naturaleza)
 
         catastro_tmp = arcpy.MakeFeatureLayer_management(cat.path, 'mfl_cat_min', query)
 
-        arcpy.SelectLayerByLocation_management(catastro_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION",
-                                               "NOT_INVERT")
+        arcpy.SelectLayerByLocation_management(catastro_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION", "NOT_INVERT")
 
         fc_download = arcpy.CopyFeatures_management(catastro_tmp, os.path.join(TMP_GDB, 'catastro_copy'))
 
@@ -69,6 +71,8 @@ class MakeGdb(object):
             vias_clip_for_region = arcpy.Clip_analysis(fc_download, self.dep.path, os.path.join(TMP_GDB, 'vias_clip'))
 
             arcpy.Append_management(vias_clip_for_region, self.via.path, "NO_TEST")
+
+            arcpy.SetParameterAsText(6, poo.via.path)
 
     def update_config(self):
         config = tb_config(self.output_path_gdb)
@@ -99,8 +103,8 @@ if __name__ == "__main__":
         zone = arcpy.GetParameterAsText(3)
         poo = MakeGdb(path, type_pot, region, zone)
         poo.main()
-        arcpy.SetParameterAsText(3, poo.dep.path)
-        arcpy.SetParameterAsText(4, poo.cat.path)
-        arcpy.SetParameterAsText(5, poo.via.path)
+        arcpy.SetParameterAsText(4, poo.dep.path)
+        arcpy.SetParameterAsText(5, poo.cat.path)
+
     except Exception as e:
         arcpy.AddError('\n\t%s\n' % e.message)
