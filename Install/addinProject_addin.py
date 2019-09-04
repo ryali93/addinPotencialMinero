@@ -114,20 +114,8 @@ class rmiSustancias(object):
     def onClick(self):
         pythonaddins.GPToolDialog(TBX, TOOL_NAME['T09'])
 
-
-class rmiConcesiones(object):
-    """Implementation for addinProject_addin.rmiConcesiones (Button)"""
-
-    def __init__(self):
-        self.enabled = True
-        self.checked = False
-
-    def onClick(self):
-        pythonaddins.GPToolDialog(TBX, TOOL_NAME['T10'])
-
-
 class rmiSensoresRemotos(object):
-    """Implementation for addinProject_addin.rmiSensoreRremotos (Button)"""
+    """Implementation for addinProject_addin.rmiSensoresRemotos (Button)"""
 
     def __init__(self):
         self.enabled = True

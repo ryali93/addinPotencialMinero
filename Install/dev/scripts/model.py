@@ -503,6 +503,31 @@ class gpl_vias(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
+class gpt_sustancias(object):
+    """
+    FEATURE CLASS DE SUSTANCIAS EN LA GEODATABASE COORPORATIVA
+    """
+    def __init__(self):
+        self.id = "OBJECTID"
+        self.shape = "SHAPE"
+        self.sustancia = "SUSTANCIA"
+
+    @property
+    def dataset(self):
+        return 'DATA_EDIT.DS_GEOCATMIN'
+
+    @property
+    def name(self):
+        return 'DATA_EDIT.GPT_RMI_Roc_Min_Ind'
+
+    @property
+    def path(self):
+        return os.path.join(CONN, self.dataset, self.name)
+
+class rmi_sustancias(object):
+    """
+    
+    """
 
 class rmi_accesos(object):
     """
@@ -544,6 +569,31 @@ class tb_accesos(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
+class gpo_litologia(object):
+    """
+    FEATURE CLASS DE UNIDADES GEOLOGICAS EN EL FILE GEODATABASE
+    """
+    codi = "CODI"
+    nombre = "NOMBRE"
+    descripcion = "DESCRIPCION"
+    unidad = "UNIDAD"
+    grado = "GRADO"
+    valor = "VALOR"
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def dataset(self):
+        return 'DS_01_Insumos'
+
+    @property
+    def name(self):
+        return 'RMI_08_GPO_Litologia'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
 
 class var_litologia(object):
     def __init__(self, ws):
