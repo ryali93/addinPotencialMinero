@@ -21,7 +21,6 @@ class gpo_dep_departamento(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
-
 class gpo_cmi_catastro_minero(object):
     """
     FEATURE CLASS DE CATASTRO MINERO EN LA GEODATABASE COORPORATIVA
@@ -45,7 +44,6 @@ class gpo_cmi_catastro_minero(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
-
 class pm_region(object):
     """
     FEATURE CLASS DE DEPARTAMENTOS EN EL FILE GEODATABASE
@@ -65,7 +63,6 @@ class pm_region(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
-
 
 class pm_catastro_minero(object):
     """
@@ -88,7 +85,6 @@ class pm_catastro_minero(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
-
 
 class pm_gpl_fallageologica(object):
     """
@@ -113,7 +109,6 @@ class pm_gpl_fallageologica(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
-
 class tb_falla_geologica(object):
     """
     FEATURE CLASS DE FALLAS GEOLOGICAS EN EL FILE GEODATABASE
@@ -130,7 +125,6 @@ class tb_falla_geologica(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.name)
-
 
 class gpo_unidad_geologica(object):
     """
@@ -159,7 +153,6 @@ class gpo_unidad_geologica(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
-
 class tb_nivel(object):
     """
     TABLA QUE CONTIENE ELS NIVELES DE POTENCIAL PARA CADA VARIABEL
@@ -181,7 +174,6 @@ class tb_nivel(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
 class tb_ug_condicion(object):
     """
     TABLA QUE CONTIENE LA CONDICION METALOTECTO O NO METALOTECTO PARA EL
@@ -200,7 +192,6 @@ class tb_ug_condicion(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.name)
-
 
 class gpo_deposito_mineral(object):
     """
@@ -226,7 +217,6 @@ class gpo_deposito_mineral(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
-
 class gpo_sensores_remotos(object):
     """
     FEATURE CLASS DE LA VARIABLE SENSORES REMOTOS
@@ -249,7 +239,6 @@ class gpo_sensores_remotos(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
-
 
 class ras_geoquimica(object):
     """
@@ -274,7 +263,6 @@ class ras_geoquimica(object):
         """
         return os.path.join(self.ws, self.name)
 
-
 class tb_config(object):
     region    = 'REGION'
     zona      = 'ZONA'
@@ -290,7 +278,6 @@ class tb_config(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.name)
-
 
 class var_unidad_geologica(object):
     def __init__(self, ws):
@@ -308,7 +295,6 @@ class var_unidad_geologica(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
-
 class var_falla_geologica(var_unidad_geologica):
     grado      = 'GRADO'
     valor      = 'VALOR'
@@ -321,7 +307,6 @@ class var_falla_geologica(var_unidad_geologica):
     def name(self):
         return 'PM_VAR_GPO_FallaGeologica'
 
-
 class var_concesion_minera(var_unidad_geologica):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -329,7 +314,6 @@ class var_concesion_minera(var_unidad_geologica):
     @property
     def name(self):
         return 'PM_VAR_GPO_ConcesionMinera'
-
 
 class var_deposito_mineral(var_unidad_geologica):
     def __init__(self, ws):
@@ -339,7 +323,6 @@ class var_deposito_mineral(var_unidad_geologica):
     def name(self):
         return 'PM_VAR_GPO_DepositoMineral'
 
-
 class var_sensor_remoto(var_unidad_geologica):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -347,7 +330,6 @@ class var_sensor_remoto(var_unidad_geologica):
     @property
     def name(self):
         return 'PM_VAR_GPO_SensorRemoto'
-
 
 class ras_unidad_geologica(object):
     def __init__(self, ws):
@@ -361,7 +343,6 @@ class ras_unidad_geologica(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
 class ras_falla_geologica(ras_unidad_geologica):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -369,7 +350,6 @@ class ras_falla_geologica(ras_unidad_geologica):
     @property
     def name(self):
         return 'PM_VAR_RAS_FallaGeologica'
-
 
 class ras_concesion_minera(ras_unidad_geologica):
     def __init__(self, ws):
@@ -379,7 +359,6 @@ class ras_concesion_minera(ras_unidad_geologica):
     def name(self):
         return 'PM_VAR_RAS_ConcesionMinera'
 
-
 class ras_deposito_mineral(ras_unidad_geologica):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -387,7 +366,6 @@ class ras_deposito_mineral(ras_unidad_geologica):
     @property
     def name(self):
         return 'PM_VAR_RAS_DepositoMineral'
-
 
 class ras_sensor_remoto(ras_unidad_geologica):
     def __init__(self, ws):
@@ -397,7 +375,6 @@ class ras_sensor_remoto(ras_unidad_geologica):
     def name(self):
         return 'PM_VAR_RAS_SensorRemoto'
 
-
 class ras_potencial_minero(ras_unidad_geologica):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -405,7 +382,6 @@ class ras_potencial_minero(ras_unidad_geologica):
     @property
     def name(self):
         return 'PM_RAS_PotencialMinero'
-
 
 class tb_cm_grado(object):
     leyenda = 'LEYENDA'
@@ -424,7 +400,6 @@ class tb_cm_grado(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
 class tb_sr_grado(object):
     condicion = 'CONDICION'
     grado = 'GRADO'
@@ -440,7 +415,6 @@ class tb_sr_grado(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.name)
-
 
 class tb_fg_grado(object):
     dist_min = 'DIST_MIN'
@@ -460,7 +434,6 @@ class tb_fg_grado(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
 class tb_pm_factor(object):
     nom_ras = 'NOM_RAS'
     factor = 'FACTOR'
@@ -479,7 +452,7 @@ class tb_pm_factor(object):
 ########################################################################
 # Potencial Minero No Metalico
 
-class gpl_vias(object):
+class rmi_gpl_vias(object):
     """
     FEATURE CLASS DE VIAS EN LA GEODATABASE COORPORATIVA
     """
@@ -523,7 +496,6 @@ class gpt_sustancias(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
-
 class rmi_gpt_sustancias(object):
     """
     FEATURE CLASS DE SUSTANCIAS EN EL FILE GEODATABASE
@@ -546,7 +518,6 @@ class rmi_gpt_sustancias(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
-
 class tb_sustancias(object):
     """
     TABLA DE SUSTANCIAS EN EL FILE GEODATABASE
@@ -566,7 +537,6 @@ class tb_sustancias(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-
 class rmi_gpl_accesos(object):
     """
     FEATURE CLASS DE ACCESOS EN EL FILE GEODATABASE
@@ -585,7 +555,6 @@ class rmi_gpl_accesos(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
-
 
 class tb_accesos(object):
     """
@@ -649,6 +618,40 @@ class var_litologia(object):
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
 
+class ras_litologia(object):
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'RMI_VAR_RAS_Litologia'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
+
+class gpo_rmi_sensores_remotos(object):
+    """
+    FEATURE CLASS DE LA VARIABLE SENSORES REMOTOS
+    """
+    tipo_arc = "TIPO_ARC"
+    tipo_oxi = "TIPO_OXI"
+    tipo     = "TIPO"
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def dataset(self):
+        return 'DS_01_Insumos'
+
+    @property
+    def name(self):
+        return 'RMI_11_GPO_SensorRemoto'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
 
 class var_accesos(var_litologia):
     """
@@ -666,6 +669,22 @@ class var_accesos(var_litologia):
     def name(self):
         return 'RMI_VAR_GPO_Accesos'
 
+class var_rmi_sensor_remoto(var_unidad_geologica):
+    def __init__(self, ws):
+        super(self.__class__, self).__init__(ws)
+
+    @property
+    def name(self):
+        return 'RMI_VAR_GPO_SensorRemoto'
+
+class ras_rmi_sensor_remoto(ras_unidad_geologica):
+    def __init__(self, ws):
+        super(self.__class__, self).__init__(ws)
+
+    @property
+    def name(self):
+        return 'RMI_VAR_RAS_SensorRemoto'
+
 class ras_accesos(object):
     def __init__(self, ws):
         self.ws = ws
@@ -677,3 +696,19 @@ class ras_accesos(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.name)
+
+class tb_rmi_factor(object):
+    nom_ras = 'NOM_RAS'
+    factor = 'FACTOR'
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'TB_RMI_Factor'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
+

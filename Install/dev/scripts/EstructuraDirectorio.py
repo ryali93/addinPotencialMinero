@@ -60,7 +60,7 @@ class MakeGdb(object):
 
     def vias(self):
         if self.type_pot == "No Metalico":
-            vias = gpl_vias()
+            vias = rmi_gpl_vias()
             vias_tmp = arcpy.MakeFeatureLayer_management(vias.path, 'mfl_vias')
 
             arcpy.SelectLayerByLocation_management(vias_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION",
