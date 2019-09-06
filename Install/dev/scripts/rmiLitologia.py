@@ -15,7 +15,6 @@ class Litologia(object):
         self.unid = args[5]
         self.grade = args[6]
         self.value = args[7]
-        # self.condition = args[8]
         self.fc_litologia = gpo_litologia(self.ws)
         self.tb_grade = tb_nivel(self.ws)
         self.tb_cond = tb_ug_condicion(self.ws)
@@ -25,8 +24,7 @@ class Litologia(object):
             self.fc_litologia.descripcion: self.desc,
             self.fc_litologia.unidad: self.unid,
             self.fc_litologia.grado: self.grade,
-            self.fc_litologia.valor: self.value,
-            # self.fc_litologia.condicion: self.condition
+            self.fc_litologia.valor: self.value
         }
 
     def check_geodatabase(self):
@@ -86,7 +84,6 @@ if __name__ == '__main__':
         unid = arcpy.GetParameterAsText(5)
         grade = arcpy.GetParameterAsText(6)
         value = arcpy.GetParameterAsText(7)
-        # condition = arcpy.GetParameterAsText(8)
 
         poo = Litologia(
             ws, fc, codi, name, desc,

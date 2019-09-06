@@ -255,7 +255,6 @@ class ras_geoquimica(object):
     """
     RASTER DE LA VARIABLE GEOQUIMICA EN EL FILE GEODATABASE
     """
-
     def __init__(self, ws):
         self.ws = ws
 
@@ -524,12 +523,51 @@ class gpt_sustancias(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
-class rmi_sustancias(object):
-    """
-    
-    """
 
-class rmi_accesos(object):
+class rmi_gpt_sustancias(object):
+    """
+    FEATURE CLASS DE SUSTANCIAS EN EL FILE GEODATABASE
+    """
+    def __init__(self, ws):
+        self.ws = ws
+        self.prod = 'PRODUCCION'
+        self.precios = 'PRECIOS'
+        self.usos = 'USOS'
+
+    @property
+    def dataset(self):
+        return 'DS_01_Insumos'
+
+    @property
+    def name(self):
+        return 'RMI_09_GPT_Sustancias'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
+
+
+class tb_sustancias(object):
+    """
+    TABLA DE SUSTANCIAS EN EL FILE GEODATABASE
+    """
+    produccion = 'PRODUCCION'
+    precios = 'PRECIOS'
+    usos = 'USOS'
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'TB_RMI_Sustancias'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
+
+
+class rmi_gpl_accesos(object):
     """
     FEATURE CLASS DE ACCESOS EN EL FILE GEODATABASE
     """
