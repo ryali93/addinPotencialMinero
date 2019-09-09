@@ -7,7 +7,7 @@ gdb = arcpy.GetParameterAsText(0)
 arcillas = arcpy.GetParameterAsText(1)
 oxidos = arcpy.GetParameterAsText(2)
 
-fc_remsem = gpo_sensores_remotos(gdb)
+fc_remsem = pmm_gpo_sensores(gdb)
 
 fc_arcillas = arcpy.Dissolve_management(arcillas, 'in_memory\\arcillas', "#", '#', 'MULTI_PART', 'DISSOLVE_LINES')
 

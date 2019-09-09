@@ -13,8 +13,8 @@ class FallGeo(object):
         self.codi = args[2]
         self.desc = args[3]
         self.dist = args[4]
-        self.tb_fallgeo = tb_falla_geologica(self.ws)
-        self.fc_fallgeo = pm_gpl_fallageologica(self.ws)
+        self.tb_fallgeo = pmm_tb_fallageol(self.ws)
+        self.fc_fallgeo = pmm_gpl_fallageol(self.ws)
         self.fields = {
             self.fc_fallgeo.codi: self.codi,
             self.fc_fallgeo.descripcion: self.desc,

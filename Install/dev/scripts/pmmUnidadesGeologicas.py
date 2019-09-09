@@ -16,9 +16,9 @@ class UnidGeo(object):
         self.grade = args[6]
         self.value = args[7]
         self.condition = args[8]
-        self.fc_unidgeo = gpo_unidad_geologica(self.ws)
+        self.fc_unidgeo = pmm_gpo_ugeol(self.ws)
         self.tb_grade = tb_nivel(self.ws)
-        self.tb_cond = tb_ug_condicion(self.ws)
+        self.tb_cond = pmm_tb_ugeol_condicion(self.ws)
         self.fields = {
             self.fc_unidgeo.codi: self.codi,
             self.fc_unidgeo.nombre: self.name,

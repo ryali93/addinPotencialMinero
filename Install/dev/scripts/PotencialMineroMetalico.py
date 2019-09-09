@@ -18,26 +18,26 @@ class PotencialMineroMetalico(object):
     messages = Messages()
 
     limite = pm_region(ws)
-    unidad_geologica = gpo_unidad_geologica(ws)
+    unidad_geologica = pmm_gpo_ugeol(ws)
     catastro_minero = pm_catastro_minero(ws)
-    falla_geologica = pm_gpl_fallageologica(ws)
-    deposito_mineral = gpo_deposito_mineral(ws)
-    sensor_remoto = gpo_sensores_remotos(ws)
-    geoquimica = ras_geoquimica(ws)
+    falla_geologica = pmm_gpl_fallageol(ws)
+    deposito_mineral = pmm_gpo_depmineral(ws)
+    sensor_remoto = pmm_gpo_sensores(ws)
+    geoquimica = pmm_ras_geoquimica(ws)
 
-    v_unidad_geologica = var_unidad_geologica(ws)
-    v_falla_geologica = var_falla_geologica(ws)
-    v_catastro_minero = var_concesion_minera(ws)
-    v_deposito_mineral = var_deposito_mineral(ws)
-    v_sensor_remoto = var_sensor_remoto(ws)
+    v_unidad_geologica = pmm_var_ugeol(ws)
+    v_falla_geologica = pmm_var_fallageol(ws)
+    v_catastro_minero = pmm_var_concmin(ws)
+    v_deposito_mineral = pmm_var_depmineral(ws)
+    v_sensor_remoto = pmm_var_sensores(ws)
 
-    r_unidad_geologica = ras_unidad_geologica(ws)
-    r_falla_geologica = ras_falla_geologica(ws)
-    r_catastro_minero = ras_concesion_minera(ws)
-    r_deposito_mineral = ras_deposito_mineral(ws)
-    r_sensor_remoto = ras_sensor_remoto(ws)
+    r_unidad_geologica = pmm_ras_ugeol(ws)
+    r_falla_geologica = pmm_ras_fallageol(ws)
+    r_catastro_minero = pmm_ras_concmin(ws)
+    r_deposito_mineral = pmm_ras_depmineral(ws)
+    r_sensor_remoto = pmm_ras_sensores(ws)
 
-    pm_factor = tb_pm_factor(ws)
+    pm_factor = pmm_tb_factor(ws)
     r_potencial_minero = ras_potencial_minero(ws)
 
     src = [i[0] for i in arcpy.da.SearchCursor(config.path, [config.zona])][0]
@@ -98,7 +98,7 @@ class PotencialMineroMetalico(object):
         fields = [self.catastro_minero.leyenda, self.unidad_geologica.condicion, self.unidad_geologica.valor,
                   self.unidad_geologica.grado, ]
 
-        cm_grado = tb_cm_grado(self.ws)
+        cm_grado = pmm_tb_concmin_grado(self.ws)
 
         grade = [i for i in arcpy.da.SearchCursor(cm_grado.path, fields)]
 
@@ -141,7 +141,7 @@ class PotencialMineroMetalico(object):
 
         fields = [self.falla_geologica.distancia, self.v_falla_geologica.influencia]
 
-        fg_grado = tb_fg_grado(self.ws)
+        fg_grado = pmm_tb_fallageol_grado(self.ws)
         fields_grado = [fg_grado.dist_min, fg_grado.dist_max, fg_grado.influencia, fg_grado.grado, fg_grado.valor]
 
         grade = [i for i in arcpy.da.SearchCursor(fg_grado.path, fields_grado)]
@@ -234,7 +234,7 @@ class PotencialMineroMetalico(object):
         arcpy.AddMessage(self.messages.gen_task_limites)
         arcpy.Append_management(erase, self.v_sensor_remoto.path, 'NO_TEST')
 
-        sr_grado = tb_sr_grado(self.ws)
+        sr_grado = pmm_tb_sensores_grado(self.ws)
 
         fields = [sr_grado.condicion, sr_grado.grado, sr_grado.valor]
         grade = [i for i in arcpy.da.SearchCursor(sr_grado.path, fields)]

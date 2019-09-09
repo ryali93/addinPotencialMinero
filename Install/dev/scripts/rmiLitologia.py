@@ -15,9 +15,9 @@ class Litologia(object):
         self.unid = args[5]
         self.grade = args[6]
         self.value = args[7]
-        self.fc_litologia = gpo_litologia(self.ws)
+        self.fc_litologia = rmi_gpo_litologia(self.ws)
         self.tb_grade = tb_nivel(self.ws)
-        self.tb_cond = tb_ug_condicion(self.ws)
+        self.tb_cond = pmm_tb_ugeol_condicion(self.ws)
         self.fields = {
             self.fc_litologia.codi: self.codi,
             self.fc_litologia.nombre: self.name,

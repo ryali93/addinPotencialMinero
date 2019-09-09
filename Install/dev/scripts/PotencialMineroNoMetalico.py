@@ -18,29 +18,29 @@ class PotencialMineroNoMetalico(object):
     messages = Messages()
 
     limite = pm_region(ws)
-    litologia = gpo_litologia(ws)
+    litologia = rmi_gpo_litologia(ws)
     accesos = rmi_gpl_accesos(ws)
     # catastro_minero = pm_catastro_minero(ws)
     # falla_geologica = pm_gpl_fallageologica(ws)
     # deposito_mineral = gpo_deposito_mineral(ws)
-    sensor_remoto = gpo_rmi_sensores_remotos(ws)
+    sensor_remoto = rmi_gpo_sensores(ws)
     # geoquimica = ras_geoquimica(ws)
 
-    var_litologia = var_litologia(ws)
-    v_accesos = var_accesos(ws)
+    var_litologia = rmi_var_litologia(ws)
+    v_accesos = rmi_var_accesos(ws)
     # v_falla_geologica = var_falla_geologica(ws)
     # v_catastro_minero = var_concesion_minera(ws)
     # v_deposito_mineral = var_deposito_mineral(ws)
-    v_sensor_remoto = var_rmi_sensor_remoto(ws)
+    v_sensor_remoto = rmi_var_sensores(ws)
 
-    r_accesos = ras_accesos(ws)
-    r_litologia = ras_litologia(ws)
+    r_accesos = rmi_ras_accesos(ws)
+    r_litologia = rmi_ras_litologia(ws)
     # r_falla_geologica = ras_falla_geologica(ws)
     # r_catastro_minero = ras_concesion_minera(ws)
     # r_deposito_mineral = ras_deposito_mineral(ws)
-    r_sensor_remoto = ras_rmi_sensor_remoto(ws)
+    r_sensor_remoto = rmi_ras_sensores(ws)
 
-    pm_factor = tb_rmi_factor(ws)
+    pm_factor = rmi_tb_factor(ws)
     # r_potencial_minero = ras_potencial_minero(ws)
 
     src = [i[0] for i in arcpy.da.SearchCursor(config.path, [config.zona])][0]
@@ -74,7 +74,7 @@ class PotencialMineroNoMetalico(object):
 
         fields = [self.v_accesos.tipo, self.v_accesos.valor]
 
-        tb_vias = tb_accesos(self.ws)
+        tb_vias = rmi_tb_accesos(self.ws)
         fields_vias_tipo = [tb_vias.tipo, tb_vias.grado, tb_vias.buffer, tb_vias.valor]
 
         vias_tipo = [i for i in arcpy.da.SearchCursor(tb_vias.path, fields_vias_tipo)]

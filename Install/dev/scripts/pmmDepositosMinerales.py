@@ -14,7 +14,7 @@ class DepoMin(object):
         self.dimension = args[3]
         self.grade = args[4]
         self.value = args[5]
-        self.fc_depomin = gpo_deposito_mineral(self.ws)
+        self.fc_depomin = pmm_gpo_depmineral(self.ws)
         self.tb_grade = tb_nivel(self.ws)
         self.fields = {
             self.fc_depomin.grado: self.grade,

@@ -33,16 +33,16 @@ class MakeGdb(object):
     def need_features(self):
         self.dep = pm_region(self.output_path_gdb)
         self.cat = pm_catastro_minero(self.output_path_gdb)
-        self.via = rmi_accesos(self.output_path_gdb)
+        self.via = rmi_gpl_accesos(self.output_path_gdb)
 
     def limit_region(self):
-        dep = gpo_dep_departamento()
+        dep = gpo_region()
         query = "%s = '%s'" % (dep.mn_depa, self.name_reg)
         lim_reg_mfl = arcpy.MakeFeatureLayer_management(dep.path, "mfl_dep", query)
         arcpy.Append_management(lim_reg_mfl, self.dep.path, "NO_TEST")
 
     def catastro_mine(self):
-        cat = gpo_cmi_catastro_minero()
+        cat = gpo_catastro_minero()
         if self.type_pot == "Metalico":
             query = "%s = 'TITULADO' AND (%s = 'M')" % (cat.leyenda, cat.naturaleza)
         else:
@@ -60,7 +60,7 @@ class MakeGdb(object):
 
     def vias(self):
         if self.type_pot == "No Metalico":
-            vias = rmi_gpl_vias()
+            vias = rmi_gpl_accesos()
             vias_tmp = arcpy.MakeFeatureLayer_management(vias.path, 'mfl_vias')
 
             arcpy.SelectLayerByLocation_management(vias_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION",

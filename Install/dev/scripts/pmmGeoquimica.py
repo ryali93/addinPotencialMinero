@@ -12,7 +12,7 @@ class Geoquimica(object):
     ws = arcpy.GetParameterAsText(0)
     raster = arcpy.GetParameterAsText(1)
 
-    raster_dataset = ras_geoquimica(ws)
+    raster_dataset = pmm_ras_geoquimica(ws)
     messages = Messages()
 
     def process(self):
