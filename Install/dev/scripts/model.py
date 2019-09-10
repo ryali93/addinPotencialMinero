@@ -442,6 +442,29 @@ class rmi_ras_litologia(pmm_ras_ugeol):
         return 'RMI_VAR_RAS_Litologia'
 
 # Accesos
+class rmi_accesos(object):
+    """
+    FEATURE CLASS DE VIAS EN LA GEODATABASE COORPORATIVA
+    """
+
+    def __init__(self):
+        self.id     = "OBJECTID"
+        self.shape  = "SHAPE"
+        self.tipo   = "RASGO_SECU"
+        self.nombre = "NOMBRE"
+
+    @property
+    def dataset(self):
+        return 'DATA_GIS.DS_IGN_BASE_PERU_500000'
+
+    @property
+    def name(self):
+        return 'DATA_GIS.IGN_TRA_VIAS'
+
+    @property
+    def path(self):
+        return os.path.join(CONN, self.dataset, self.name)
+
 class rmi_gpl_accesos(object):
     """
     FEATURE CLASS DE ACCESOS EN EL FILE GEODATABASE
@@ -510,27 +533,6 @@ class rmi_ras_accesos(pmm_ras_ugeol):
 # Sustancias
 class rmi_gpt_sustancias(object):
     """
-    FEATURE CLASS DE SUSTANCIAS EN LA GEODATABASE COORPORATIVA
-    """
-    def __init__(self):
-        self.id = "OBJECTID"
-        self.shape = "SHAPE"
-        self.sustancia = "SUSTANCIA"
-
-    @property
-    def dataset(self):
-        return 'DATA_EDIT.DS_GEOCATMIN'
-
-    @property
-    def name(self):
-        return 'DATA_EDIT.GPT_RMI_Roc_Min_Ind'
-
-    @property
-    def path(self):
-        return os.path.join(CONN, self.dataset, self.name)
-
-class rmi_sustancias(object):
-    """
     FEATURE CLASS DE SUSTANCIAS EN EL FILE GEODATABASE
     """
     def __init__(self, ws):
@@ -550,6 +552,27 @@ class rmi_sustancias(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
+
+class rmi_sustancias(object):
+    """
+    FEATURE CLASS DE SUSTANCIAS EN LA GEODATABASE COORPORATIVA
+    """
+    def __init__(self):
+        self.id = "OBJECTID"
+        self.shape = "SHAPE"
+        self.sustancia = "SUSTANCIA"
+
+    @property
+    def dataset(self):
+        return 'DATA_EDIT.DS_GEOCATMIN'
+
+    @property
+    def name(self):
+        return 'DATA_EDIT.GPT_RMI_Roc_Min_Ind'
+
+    @property
+    def path(self):
+        return os.path.join(CONN, self.dataset, self.name)
 
 class rmi_tb_sustancias(object):
     """

@@ -34,6 +34,7 @@ class MakeGdb(object):
         self.dep = pm_region(self.output_path_gdb)
         self.cat = pm_catastro_minero(self.output_path_gdb)
         self.via = rmi_gpl_accesos(self.output_path_gdb)
+        self.sustancia = rmi_gpt_sustancias(self.output_path_gdb)
 
     def limit_region(self):
         dep = gpo_region()
@@ -60,7 +61,7 @@ class MakeGdb(object):
 
     def vias(self):
         if self.type_pot == "No Metalico":
-            vias = rmi_gpl_accesos()
+            vias = rmi_accesos()
             vias_tmp = arcpy.MakeFeatureLayer_management(vias.path, 'mfl_vias')
 
             arcpy.SelectLayerByLocation_management(vias_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION",
@@ -73,6 +74,22 @@ class MakeGdb(object):
             arcpy.Append_management(vias_clip_for_region, self.via.path, "NO_TEST")
 
             arcpy.SetParameterAsText(6, poo.via.path)
+
+    def sustancias(self):
+        if self.type_pot == "No Metalico":
+            sust = rmi_sustancias()
+            sust_tmp = arcpy.MakeFeatureLayer_management(sust.path, 'mfl_sust')
+
+            arcpy.SelectLayerByLocation_management(sust_tmp, "INTERSECT", self.dep.path, "#", "NEW_SELECTION",
+                                                   "NOT_INVERT")
+
+            fc_download = arcpy.CopyFeatures_management(sust_tmp, os.path.join(TMP_GDB, 'sust_copy'))
+
+            sust_clip_for_region = arcpy.Clip_analysis(fc_download, self.dep.path, os.path.join(TMP_GDB, 'sust_clip'))
+
+            arcpy.Append_management(sust_clip_for_region, self.sustancia.path, "NO_TEST")
+
+            arcpy.SetParameterAsText(7, poo.sustancia.path)
 
     def update_config(self):
         config = tb_config(self.output_path_gdb)
@@ -91,9 +108,9 @@ class MakeGdb(object):
         self.limit_region()
         self.catastro_mine()
         self.vias()
+        self.sustancias()
         self.update_config()
         arcpy.AddMessage(msg.end_process)
-
 
 if __name__ == "__main__":
     try:

@@ -14,7 +14,7 @@ class Sustancias(object):
         self.precios = args[3]
         self.usos = args[4]
         self.tb_sust = rmi_tb_sustancias(self.ws)
-        self.fc_sust = rmi_sustancias(self.ws)
+        self.fc_sust = rmi_gpt_sustancias(self.ws)
         self.fields = {
             self.fc_sust.prod: self.prod,
             self.fc_sust.precios: self.precios,

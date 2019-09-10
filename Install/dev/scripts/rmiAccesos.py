@@ -39,24 +39,24 @@ class Accesos(object):
                 arcpy.AddWarning('\t\tError: FID: %s  |  %s  |  %s' % (x[0], x[1], x[-1]))
                 raise RuntimeError(msg.error_info)
 
-    # def load_data(self):
-    #     copy = arcpy.CopyFeatures_management(
-    #         self.fc, "in_memory\\accesos"
-    #     )
-    #     with arcpy.da.UpdateCursor(copy, [self.desc]) as cursorUC:
-    #         for row in cursorUC:
-    #             row[0] = row[0].lower()
-    #             cursorUC.updateRow(row)
-    #     del cursorUC
-    #
-    #     arcpy.DeleteRows_management(self.fc_fallgeo.path)
-    #
-    #     for k, v in self.fields.items():
-    #         arcpy.AlterField_management(copy, v, k)
-    #
-    #     arcpy.Append_management(
-    #         copy, self.fc_fallgeo.path, "NO_TEST"
-    #     )
+    def load_data(self):
+        copy = arcpy.CopyFeatures_management(
+            self.fc, "in_memory\\accesos"
+        )
+        with arcpy.da.UpdateCursor(copy, [self.tipo]) as cursorUC:
+            for row in cursorUC:
+                row[0] = row[0].lower()
+                cursorUC.updateRow(row)
+        del cursorUC
+
+        arcpy.DeleteRows_management(self.fc_acceso.path)
+
+        for k, v in self.fields.items():
+            arcpy.AlterField_management(copy, v, k)
+
+        arcpy.Append_management(
+            copy, self.fc_acceso.path, "NO_TEST"
+        )
 
     def main(self):
         arcpy.AddMessage(msg.init_process)
@@ -75,12 +75,10 @@ if __name__ == '__main__':
     try:
         ws = arcpy.GetParameterAsText(0)
         fc = arcpy.GetParameterAsText(1)
-        codi = arcpy.GetParameterAsText(2)
-        desc = arcpy.GetParameterAsText(3)
-        dist = arcpy.GetParameterAsText(4)
+        tipo = arcpy.GetParameterAsText(2)
 
-        poo = Accesos(ws, fc, codi, desc, dist)
+        poo = Accesos(ws, fc, tipo)
         poo.main()
-        arcpy.SetParameterAsText(5, poo.fc_fallgeo.path)
+        arcpy.SetParameterAsText(5, poo.fc_acceso.path)
     except Exception as e:
         arcpy.AddError('\n\t%s\n' % e.message)
