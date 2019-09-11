@@ -126,6 +126,7 @@ class PotencialMineroMetalico(object):
                                          self.r_catastro_minero.path, "CELL_CENTER", self.unidad_geologica.valor,
                                          self.pixel)
 
+
     def method_fallas_geologicas(self):
         """
 

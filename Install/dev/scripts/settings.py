@@ -29,5 +29,3 @@ TOOL_NAME = {
 USER_GUIDE = os.path.join(STATIC, 'potencial-minero-user-guide.pdf')
 
 NAME_GDB = 'DRME_PM.gdb'
-
-arcpy.geoprocessing._base.Geoprocessor().SplitLine_management()

@@ -225,9 +225,9 @@ class pmm_tb_fallageol_grado(object):
         return os.path.join(self.ws, self.name)
 
 class pmm_var_fallageol(pmm_var_ugeol):
+    influencia = 'INFLUENCIA'
     grado      = 'GRADO'
     valor      = 'VALOR'
-    influencia = 'INFLUENCIA'
 
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
@@ -449,9 +449,8 @@ class rmi_accesos(object):
 
     def __init__(self):
         self.id     = "OBJECTID"
-        self.shape  = "SHAPE"
-        self.tipo   = "RASGO_SECU"
-        self.nombre = "NOMBRE"
+        self.rasgo_secu   = "RASGO_SECU"
+        self.rasgo_prin = "RASGO_PRIN"
 
     @property
     def dataset(self):
@@ -470,6 +469,7 @@ class rmi_gpl_accesos(object):
     FEATURE CLASS DE ACCESOS EN EL FILE GEODATABASE
     """
     tipo = 'TIPO'
+    influencia = 'INFLUENCIA'
 
     def __init__(self, ws):
         self.ws = ws
@@ -492,7 +492,7 @@ class rmi_tb_accesos(object):
     """
     tipo = "TIPO"
     grado = "GRADO"
-    buffer = "BUFFER"
+    influencia = "INFLUENCIA"
     valor = "VALOR"
 
     def __init__(self, ws):
@@ -506,29 +506,37 @@ class rmi_tb_accesos(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-class rmi_var_accesos(pmm_var_ugeol):
-    """
-    :return
-    """
-    tipo = 'TIPO'
+class rmi_var_accesos(object):
+    influencia = 'INFLUENCIA'
     grado = 'GRADO'
-    buffer = 'BUFFER'
     valor = 'VALOR'
 
     def __init__(self, ws):
-        super(self.__class__, self).__init__(ws)
+        self.ws = ws
 
     @property
     def name(self):
         return 'RMI_VAR_GPO_Accesos'
 
-class rmi_ras_accesos(pmm_ras_ugeol):
+    @property
+    def dataset(self):
+        return 'DS_02_Variables'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
+
+class rmi_ras_accesos(object):
     def __init__(self, ws):
-        super(self.__class__, self).__init__(ws)
+        self.ws = ws
 
     @property
     def name(self):
         return 'RMI_VAR_RAS_Accesos'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
 
 # Sustancias
 class rmi_gpt_sustancias(object):

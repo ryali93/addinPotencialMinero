@@ -8,11 +8,17 @@ arcpy.env.overwriteOutput = True
 
 class PotencialMineroNoMetalico(object):
 
-    ws = arcpy.GetParameterAsText(0)
-    pixel = arcpy.GetParameterAsText(1)
-    exportar = arcpy.GetParameterAsText(2)
-    publicar = arcpy.GetParameterAsText(3)
-    visualizar = arcpy.GetParameterAsText(4)
+
+    ws = r'D:\RYali\TDR5\4product\borrar\PM_PIURA_5b47d4da-50f9-4df1-b7b1-5d80490eee3f\DRME_PM.gdb'
+    pixel = '300'
+    exportar = 'true'
+    publicar = 'true'
+    visualizar = 'true'
+    # ws = arcpy.GetParameterAsText(0)
+    # pixel = arcpy.GetParameterAsText(1)
+    # exportar = arcpy.GetParameterAsText(2)
+    # publicar = arcpy.GetParameterAsText(3)
+    # visualizar = arcpy.GetParameterAsText(4)
 
     config = tb_config(ws)
     messages = Messages()
@@ -63,59 +69,72 @@ class PotencialMineroNoMetalico(object):
 
 
     def method_accesos(self):
-        arcpy.AddMessage(self.messages.eval_fg)
+        arcpy.AddMessage(self.messages.eval_vias)
 
         self.pre_treatment(self.accesos.path, self.v_accesos.path, self.r_accesos.path)
 
         feature = arcpy.CopyFeatures_management(self.accesos.path, 'in_memory\\feature')
 
-        arcpy.AddField_management(feature, self.v_accesos.tipo, 'TEXT', "#", 100)
-        arcpy.AddField_management(feature, self.v_accesos.valor, 'DOUBLE')
+        arcpy.AddField_management(feature, self.accesos.influencia, 'DOUBLE')
 
-        fields = [self.v_accesos.tipo, self.v_accesos.valor]
+        fields = [self.accesos.tipo, self.accesos.influencia]
 
         tb_vias = rmi_tb_accesos(self.ws)
-        fields_vias_tipo = [tb_vias.tipo, tb_vias.grado, tb_vias.buffer, tb_vias.valor]
 
-        vias_tipo = [i for i in arcpy.da.SearchCursor(tb_vias.path, fields_vias_tipo)]
+        fields_vias_tipo = [tb_vias.tipo, tb_vias.grado, tb_vias.influencia, tb_vias.valor]
 
-        arcpy.AddMessage(self.messages.eval_fg_task_radio)
-        # with arcpy.da.UpdateCursor(feature, fields) as cursor:
-        #     for i in cursor:
-        #         i[2] = i[0]
-        #         i[3] = i[1]
-        #         cursor.updateRow(i)
-        #     del cursor
-        #
-        # dissolve = arcpy.Dissolve_management(feature, 'in_memory\\dissolve', self.v_accesos.tipo, "#",
-        #                                      'MULTI_PART', 'DISSOLVE_LINES')
-        #
-        # arcpy.AddMessage(self.messages.eval_fg_task_influencia)
-        # influencia = arcpy.Buffer_analysis(dissolve, 'in_memory\\buffer', self.v_accesos.tipo)
-        #
-        # arcpy.Append_management(influencia, self.v_accesos.path, 'NO_TEST')
-        #
-        # erase = arcpy.Erase_analysis(self.limite.path, self.v_accesos.path, 'in_memory\\erase')
-        #
-        # arcpy.AddMessage(self.messages.gen_task_limites)
-        # arcpy.Append_management(erase, self.v_accesos.path, 'NO_TEST')
-        #
-        # del fields[0]
-        #
-        # fields.append(self.v_accesos.tipo)
-        # fields.append(self.v_accesos.valor)
-        #
-        # arcpy.AddMessage(self.messages.gen_task_grade)
-        # with arcpy.da.UpdateCursor(self.v_accesos.path, fields) as cursor:
-        #     for i in cursor:
-        #         pass
-        #         cursor.updateRow(i)
-        #     del cursor
-        #
-        # arcpy.AddMessage(self.messages.gen_task_save_ra)
-        # arcpy.PolygonToRaster_conversion(self.v_accesos.path, self.v_accesos.valor,
-        #                                  self.r_accesos.path, "CELL_CENTER", self.v_accesos.valor,
-        #                                  self.pixel)
+        grade = [i for i in arcpy.da.SearchCursor(tb_vias.path, fields_vias_tipo)]
+
+        arcpy.AddMessage(self.messages.eval_vias_task_radio)
+
+        with arcpy.da.UpdateCursor(feature, fields) as cursor:
+            for i in cursor:
+                for x in grade:
+                    if x[0] == i[0]:
+                        i[1] = x[2]
+                        break
+                cursor.updateRow(i)
+            del cursor
+
+        dissolve = arcpy.Dissolve_management(feature, 'in_memory\\dissolve', self.v_accesos.influencia, "#",
+                                             'MULTI_PART', 'DISSOLVE_LINES')
+
+        arcpy.AddMessage(self.messages.eval_vias_task_influencia)
+        influencia = arcpy.Buffer_analysis(dissolve, 'in_memory\\buffer', self.v_accesos.influencia)
+
+        arcpy.Append_management(influencia, self.v_accesos.path, 'NO_TEST')
+
+        erase = arcpy.Erase_analysis(self.limite.path, self.v_accesos.path, 'in_memory\\erase')
+
+        intersect = arcpy.Intersect_analysis([erase, self.limite.path],
+                                             os.path.join(TMP_GDB, "RMI_VAR_GPO_Accesos"),
+                                             'ALL', '#', 'INPUT')
+
+        arcpy.AddMessage(self.messages.gen_task_limites)
+        arcpy.Append_management(intersect, self.v_accesos.path, 'NO_TEST')
+
+        del fields[0]
+
+        fields.append(self.v_accesos.grado)
+        fields.append(self.v_accesos.valor)
+
+        arcpy.AddMessage(self.messages.gen_task_grade)
+        valores = [x[0] for x in arcpy.da.SearchCursor(tb_vias.path, [tb_vias.valor])]
+        with arcpy.da.UpdateCursor(self.v_accesos.path, fields) as cursor:
+            for i in cursor:
+                for x in grade:
+                    if i[0] == x[2]:
+                        i[1], i[2] = x[1], x[3]
+                        break
+                if i[0] == None:
+                    i[2] = min(valores)
+                cursor.updateRow(i)
+            del cursor
+
+        arcpy.AddMessage(self.messages.gen_task_save_ra)
+        arcpy.PolygonToRaster_conversion(self.v_accesos.path, self.v_accesos.valor,
+                                         self.r_accesos.path, "CELL_CENTER", self.v_accesos.valor,
+                                         self.pixel)
 
     def get_no_metalic_potential(self):
         arcpy.AddMessage(self.messages.eval_pm)

@@ -73,6 +73,11 @@ class MakeGdb(object):
 
             arcpy.Append_management(vias_clip_for_region, self.via.path, "NO_TEST")
 
+            try:
+                update_fields_accesos(self.via.path)
+            except:
+                pass
+
             arcpy.SetParameterAsText(6, poo.via.path)
 
     def sustancias(self):
