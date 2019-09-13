@@ -65,28 +65,6 @@ class gpo_catastro_minero(object):
     def path(self):
         return os.path.join(CONN, self.dataset, self.name)
 
-class pm_catastro_minero(object):
-    """
-    FEATURE CLASS DE CATASTRO MINERO EN EL FILE GEODATABASE
-    """
-    leyenda    = "LEYENDA"
-    naturaleza = "NATURALEZA"
-
-    def __init__(self, ws):
-        self.ws = ws
-
-    @property
-    def dataset(self):
-        return 'DS_01_Insumos'
-
-    @property
-    def name(self):
-        return 'PM_04_GPO_CatastroMinero'
-
-    @property
-    def path(self):
-        return os.path.join(self.ws, self.dataset, self.name)
-
 ########################################################################
 # Potencial Minero Metalico
 
@@ -125,6 +103,7 @@ class pmm_tb_ugeol_condicion(object):
     """
     code = "CODE"
     descrip = "DESCRIP"
+    tipo = "TIPO"
 
     def __init__(self, ws):
         self.ws = ws
@@ -286,11 +265,34 @@ class pmm_ras_depmineral(pmm_ras_ugeol):
         return 'PM_VAR_RAS_DepositoMineral'
 
 # Concesion minera
+class pmm_gpo_concmin(object):
+    """
+    FEATURE CLASS DE CATASTRO MINERO EN EL FILE GEODATABASE
+    """
+    leyenda    = "LEYENDA"
+    naturaleza = "NATURALEZA"
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def dataset(self):
+        return 'DS_01_Insumos'
+
+    @property
+    def name(self):
+        return 'PM_04_GPO_CatastroMinero'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
+
 class pmm_tb_concmin_grado(object):
     leyenda = 'LEYENDA'
     condicion = 'CONDICION'
     grado = 'GRADO'
     valor = 'VALOR'
+    tipo = 'TIPO'
 
     def __init__(self, ws):
         self.ws = ws
@@ -405,6 +407,7 @@ class rmi_gpo_litologia(object):
     unidad = "UNIDAD"
     grado = "GRADO"
     valor = "VALOR"
+    condicion = "CONDICION"
 
     def __init__(self, ws):
         self.ws = ws
@@ -420,6 +423,26 @@ class rmi_gpo_litologia(object):
     @property
     def path(self):
         return os.path.join(self.ws, self.dataset, self.name)
+
+class rmi_tb_litologia_condicion(object):
+    """
+    TABLA QUE CONTIENE LA CONDICION LITOCTETO O NO LITOCTETO PARA EL
+    FEATURE CLASS DE LITOLOGIA
+    """
+    code = "CODE"
+    descrip = "DESCRIP"
+    tipo = "TIPO"
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'TB_UG_Condicion'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
 
 class rmi_var_litologia(pmm_var_ugeol):
     def __init__(self, ws):
@@ -440,6 +463,63 @@ class rmi_ras_litologia(pmm_ras_ugeol):
     @property
     def name(self):
         return 'RMI_VAR_RAS_Litologia'
+
+# Concesion minera
+class rmi_gpo_concmin(object):
+    """
+    FEATURE CLASS DE CATASTRO MINERO EN EL FILE GEODATABASE
+    """
+    leyenda    = "LEYENDA"
+    naturaleza = "NATURALEZA"
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def dataset(self):
+        return 'DS_01_Insumos'
+
+    @property
+    def name(self):
+        return 'RMI_10_GPO_CatastroMinero'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
+
+class rmi_tb_concmin_grado(object):
+    leyenda = 'LEYENDA'
+    condicion = 'CONDICION'
+    grado = 'GRADO'
+    valor = 'VALOR'
+    tipo = 'TIPO'
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'TB_CM_Grado'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
+
+class rmi_var_concmin(pmm_var_ugeol):
+    def __init__(self, ws):
+        super(self.__class__, self).__init__(ws)
+
+    @property
+    def name(self):
+        return 'RMI_VAR_GPO_ConcesionMinera'
+
+class rmi_ras_concmin(pmm_ras_ugeol):
+    def __init__(self, ws):
+        super(self.__class__, self).__init__(ws)
+
+    @property
+    def name(self):
+        return 'RMI_VAR_RAS_ConcesionMinera'
 
 # Accesos
 class rmi_accesos(object):
@@ -545,9 +625,9 @@ class rmi_gpt_sustancias(object):
     """
     def __init__(self, ws):
         self.ws = ws
-        self.prod = 'PRODUCCION'
-        self.precios = 'PRECIOS'
-        self.usos = 'USOS'
+        self.sustancia = 'SUSTANCIA'
+        self.grado = 'GRADO'
+        self.valor = 'VALOR'
 
     @property
     def dataset(self):
@@ -586,9 +666,10 @@ class rmi_tb_sustancias(object):
     """
     TABLA DE SUSTANCIAS EN EL FILE GEODATABASE
     """
-    produccion = 'PRODUCCION'
-    precios = 'PRECIOS'
-    usos = 'USOS'
+    sustancia = 'SUSTANCIA'
+    grado = 'GRADO'
+    valor = 'VALOR'
+    influencia = 'INFLUENCIA'
 
     def __init__(self, ws):
         self.ws = ws
@@ -602,9 +683,9 @@ class rmi_tb_sustancias(object):
         return os.path.join(self.ws, self.name)
 
 class rmi_var_sustancias(pmm_var_ugeol):
-    """
-    :return
-    """
+    influencia = 'INFLUENCIA'
+    grado      = 'GRADO'
+    valor      = 'VALOR'
 
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)

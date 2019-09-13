@@ -7,6 +7,8 @@ msg = Messages()
 
 class Litologia(object):
     def __init__(self, *args):
+        self.tipo_pot = 'no metalico'
+
         self.ws = args[0]
         self.fc = args[1]
         self.codi = args[2]
@@ -15,16 +17,18 @@ class Litologia(object):
         self.unid = args[5]
         self.grade = args[6]
         self.value = args[7]
+        self.condition = args[8]
         self.fc_litologia = rmi_gpo_litologia(self.ws)
         self.tb_grade = tb_nivel(self.ws)
-        self.tb_cond = pmm_tb_ugeol_condicion(self.ws)
+        self.tb_cond = rmi_tb_litologia_condicion(self.ws)
         self.fields = {
             self.fc_litologia.codi: self.codi,
             self.fc_litologia.nombre: self.name,
             self.fc_litologia.descripcion: self.desc,
             self.fc_litologia.unidad: self.unid,
             self.fc_litologia.grado: self.grade,
-            self.fc_litologia.valor: self.value
+            self.fc_litologia.valor: self.value,
+            self.fc_litologia.condicion: self.condition
         }
 
     def check_geodatabase(self):
@@ -40,18 +44,30 @@ class Litologia(object):
         domain = [x[0] for x in arcpy.da.SearchCursor(
             self.tb_grade.path, [self.tb_grade.grado]
         )]
-        self.info = [x for x in arcpy.da.SearchCursor(self.fc, ['OID@', self.grade])]
-        errors = [x for x in self.info if x[1].lower() not in domain]
+        self.info = [x for x in arcpy.da.SearchCursor(self.fc, ['OID@', self.grade, self.condition])]
+        errors = [x for x in self.info if x[1].lower() not in domain or x[-1] in [None, False, '', ' ']]
         if len(errors) > 0:
             for x in errors:
                 arcpy.AddWarning('\t\tError: %s  |  %s' % (x[0], x[1]))
                 raise RuntimeError(msg.error_info)
 
+    def check_condition(self):
+        query = "{} = '{}'".format(self.tb_cond.tipo, self.tipo_pot)
+        domain = [x[0] for x in arcpy.da.SearchCursor(
+            self.tb_cond.path, [self.tb_cond.descrip],
+            query
+        )]
+        errors = [x for x in self.info if x[-1].lower() not in domain or x[-1] in [None, False, '', ' ']]
+        if len(errors) > 0:
+            for x in errors:
+                arcpy.AddWarning('\t\tError: FID %s | %s' % (x[0], x[-1]))
+                raise RuntimeError(msg.error_info)
+
     def load_data(self):
         copy = arcpy.CopyFeatures_management(self.fc, "in_memory\\litologia")
-        with arcpy.da.UpdateCursor(copy, [self.grade]) as cursorUC:
+        with arcpy.da.UpdateCursor(copy, [self.grade, self.condition]) as cursorUC:
             for row in cursorUC:
-                row[0] = row[0].lower()
+                row[0], row[1] = row[0].lower(), row[1].lower()
                 cursorUC.updateRow(row)
         del cursorUC
         arcpy.DeleteRows_management(self.fc_litologia.path)
@@ -69,6 +85,7 @@ class Litologia(object):
         self.check_exist_feature()
         arcpy.AddMessage(msg.check_info)
         self.check_grade()
+        self.check_condition()
         arcpy.AddMessage(msg.send_database)
         self.load_data()
         arcpy.AddMessage(msg.end_process)
@@ -84,13 +101,13 @@ if __name__ == '__main__':
         unid = arcpy.GetParameterAsText(5)
         grade = arcpy.GetParameterAsText(6)
         value = arcpy.GetParameterAsText(7)
+        condition = arcpy.GetParameterAsText(8)
 
         poo = Litologia(
             ws, fc, codi, name, desc,
-            unid, grade, value
+            unid, grade, value, condition
         )
         poo.main()
         arcpy.SetParameterAsText(9, poo.fc_litologia.path)
     except Exception as e:
         arcpy.AddError('\n\t%s\n' % e.message)
-

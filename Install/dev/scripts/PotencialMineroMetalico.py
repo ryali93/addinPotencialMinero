@@ -7,6 +7,7 @@ arcpy.env.overwriteOutput = True
 
 
 class PotencialMineroMetalico(object):
+    tipo_pot = 'metalico'
 
     ws = arcpy.GetParameterAsText(0)
     pixel = arcpy.GetParameterAsText(1)
@@ -19,7 +20,7 @@ class PotencialMineroMetalico(object):
 
     limite = pm_region(ws)
     unidad_geologica = pmm_gpo_ugeol(ws)
-    catastro_minero = pm_catastro_minero(ws)
+    catastro_minero = pmm_gpo_concmin(ws)
     falla_geologica = pmm_gpl_fallageol(ws)
     deposito_mineral = pmm_gpo_depmineral(ws)
     sensor_remoto = pmm_gpo_sensores(ws)
@@ -80,7 +81,6 @@ class PotencialMineroMetalico(object):
 
         :return:
         """
-
         arcpy.AddMessage(self.messages.eval_cm)
 
         self.pre_treatment(self.catastro_minero.path, self.v_catastro_minero.path, self.r_catastro_minero.path)
@@ -100,9 +100,11 @@ class PotencialMineroMetalico(object):
 
         cm_grado = pmm_tb_concmin_grado(self.ws)
 
-        grade = [i for i in arcpy.da.SearchCursor(cm_grado.path, fields)]
+        query = "{} = '{}'".format(cm_grado.tipo, self.tipo_pot)
+        grade = [i for i in arcpy.da.SearchCursor(cm_grado.path, fields, query)]
 
         arcpy.AddMessage(self.messages.gen_task_grade)
+
         with arcpy.da.UpdateCursor(union, fields) as cursor:
             for i in cursor:
                 cond = i[0]
@@ -128,10 +130,6 @@ class PotencialMineroMetalico(object):
 
 
     def method_fallas_geologicas(self):
-        """
-
-        :return:
-        """
         arcpy.AddMessage(self.messages.eval_fg)
 
         self.pre_treatment(self.falla_geologica.path, self.v_falla_geologica.path, self.r_falla_geologica.path)
@@ -143,11 +141,13 @@ class PotencialMineroMetalico(object):
         fields = [self.falla_geologica.distancia, self.v_falla_geologica.influencia]
 
         fg_grado = pmm_tb_fallageol_grado(self.ws)
+
         fields_grado = [fg_grado.dist_min, fg_grado.dist_max, fg_grado.influencia, fg_grado.grado, fg_grado.valor]
 
         grade = [i for i in arcpy.da.SearchCursor(fg_grado.path, fields_grado)]
 
         arcpy.AddMessage(self.messages.eval_fg_task_radio)
+
         with arcpy.da.UpdateCursor(feature, fields) as cursor:
             for i in cursor:
                 for x in grade:
@@ -262,7 +262,7 @@ class PotencialMineroMetalico(object):
         arcpy.PolygonToRaster_conversion(self.v_sensor_remoto.path, sr_grado.valor, self.r_sensor_remoto.path,
                                          "CELL_CENTER", sr_grado.valor, self.pixel)
 
-    def get_power_mining(self):
+    def get_metalic_potential(self):
         arcpy.AddMessage(self.messages.eval_pm)
 
         if arcpy.Exists(self.r_potencial_minero.path):
@@ -306,7 +306,7 @@ class PotencialMineroMetalico(object):
             self.method_depositos_minerales()
             self.method_geo_quimica()
             self.method_sensores_remotos()
-            self.get_power_mining()
+            self.get_metalic_potential()
             arcpy.AddMessage(self.messages.end_process)
         except Exception as e:
             arcpy.AddError('\n\t' + e.message + '\t')

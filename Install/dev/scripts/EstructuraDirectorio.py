@@ -32,9 +32,13 @@ class MakeGdb(object):
 
     def need_features(self):
         self.dep = pm_region(self.output_path_gdb)
-        self.cat = pm_catastro_minero(self.output_path_gdb)
         self.via = rmi_gpl_accesos(self.output_path_gdb)
         self.sustancia = rmi_gpt_sustancias(self.output_path_gdb)
+
+        if self.type_pot == "Metalico":
+            self.cat = pmm_gpo_concmin(self.output_path_gdb)
+        else:
+            self.cat = rmi_gpo_concmin(self.output_path_gdb)
 
     def limit_region(self):
         dep = gpo_region()

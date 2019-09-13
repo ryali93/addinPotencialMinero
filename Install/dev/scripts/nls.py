@@ -42,6 +42,11 @@ class Messages(object):
 
     """ Calculo del Potencial Minero No Metalico """
 
+    eval_lito = u'\n\t1. Evaluación de variable de Unidades Geológicas'
+
     eval_vias = u'\n\t3. Evaluación de variable de Accesos'
     eval_vias_task_radio = u'\t   - Estimando el radio de influencia para cada vía'
     eval_vias_task_influencia = u'\t   - Calculando las zonas de influencia'
+
+    eval_sust = u'\n\t4. Evaluación de variable de Sustancias'
+    eval_sust_task_radio = u'\t   - Estimando el radio de influencia para cada vía'

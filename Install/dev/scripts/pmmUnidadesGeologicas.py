@@ -7,6 +7,8 @@ msg = Messages()
 
 class UnidGeo(object):
     def __init__(self, *args):
+        self.tipo_pot = 'metalico'
+
         self.ws = args[0]
         self.fc = args[1]
         self.codi = args[2]
@@ -50,8 +52,10 @@ class UnidGeo(object):
                 raise RuntimeError(msg.error_info)
 
     def check_condition(self):
+        query = "{} = '{}'".format(self.tb_cond.tipo, self.tipo_pot)
         domain = [x[0] for x in arcpy.da.SearchCursor(
-            self.tb_cond.path, [self.tb_cond.descrip]
+            self.tb_cond.path, [self.tb_cond.descrip],
+            query
         )]
         errors = [x for x in self.info if x[-1].lower() not in domain or x[-1] in [None, False, '', ' ']]
         if len(errors) > 0:
