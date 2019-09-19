@@ -418,7 +418,7 @@ class rmi_gpo_litologia(object):
 
     @property
     def name(self):
-        return 'RMI_08_GPO_Litologia'
+        return 'RMI_06_GPO_Litologia'
 
     @property
     def path(self):
@@ -481,7 +481,7 @@ class rmi_gpo_concmin(object):
 
     @property
     def name(self):
-        return 'RMI_10_GPO_CatastroMinero'
+        return 'RMI_08_GPO_CatastroMinero'
 
     @property
     def path(self):
@@ -560,7 +560,7 @@ class rmi_gpl_accesos(object):
 
     @property
     def name(self):
-        return 'RMI_12_GPL_Accesos'
+        return 'RMI_10_GPL_Accesos'
 
     @property
     def path(self):
@@ -635,7 +635,7 @@ class rmi_gpt_sustancias(object):
 
     @property
     def name(self):
-        return 'RMI_09_GPT_Sustancias'
+        return 'RMI_07_GPT_Sustancias'
 
     @property
     def path(self):
@@ -682,17 +682,26 @@ class rmi_tb_sustancias(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-class rmi_var_sustancias(pmm_var_ugeol):
+class rmi_var_sustancias(object):
+    sustancia = 'SUSTANCIA'
     influencia = 'INFLUENCIA'
     grado      = 'GRADO'
     valor      = 'VALOR'
 
     def __init__(self, ws):
-        super(self.__class__, self).__init__(ws)
+        self.ws = ws
 
     @property
     def name(self):
         return 'RMI_VAR_GPO_Sustancias'
+
+    @property
+    def dataset(self):
+        return 'DS_02_Variables'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.dataset, self.name)
 
 class rmi_ras_sustancias(pmm_ras_ugeol):
     def __init__(self, ws):
@@ -720,7 +729,7 @@ class rmi_gpo_sensores(object):
 
     @property
     def name(self):
-        return 'RMI_11_GPO_SensorRemoto'
+        return 'RMI_09_GPO_SensorRemoto'
 
     @property
     def path(self):
@@ -812,13 +821,13 @@ class pmm_tb_factor(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-class ras_potencial_minero(pmm_ras_ugeol):
+class ras_potencial_minero_metalico(pmm_ras_ugeol):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
 
     @property
     def name(self):
-        return 'PM_RAS_PotencialMinero'
+        return 'PM_RAS_PotencialMineroMetalico'
 
 # Potencial Minero No Metalico
 class rmi_tb_factor(object):
@@ -836,10 +845,10 @@ class rmi_tb_factor(object):
     def path(self):
         return os.path.join(self.ws, self.name)
 
-class ras_potencial_no_minero(pmm_ras_ugeol):
+class ras_potencial_minero_no_metalico(pmm_ras_ugeol):
     def __init__(self, ws):
         super(self.__class__, self).__init__(ws)
 
     @property
     def name(self):
-        return 'PM_RAS_PotencialNoMinero'
+        return 'PM_RAS_PotencialMineroNoMetalico'

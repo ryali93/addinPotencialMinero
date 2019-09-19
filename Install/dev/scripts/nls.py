@@ -44,9 +44,12 @@ class Messages(object):
 
     eval_lito = u'\n\t1. Evaluación de variable de Unidades Geológicas'
 
-    eval_vias = u'\n\t3. Evaluación de variable de Accesos'
+    eval_sust = u'\n\t2. Evaluación de variable de Sustancias'
+    eval_sust_task_radio = u'\t   - Estimando el radio de influencia para cada sustancia'
+    eval_sust_task_influencia = u'\t   - Calculando las zonas de influencia'
+
+    eval_sr_rmi = u'\n\t4. Evaluación de variable Sensores Remotos'
+
+    eval_vias = u'\n\t5. Evaluación de variable de Accesos'
     eval_vias_task_radio = u'\t   - Estimando el radio de influencia para cada vía'
     eval_vias_task_influencia = u'\t   - Calculando las zonas de influencia'
-
-    eval_sust = u'\n\t4. Evaluación de variable de Sustancias'
-    eval_sust_task_radio = u'\t   - Estimando el radio de influencia para cada vía'

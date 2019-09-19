@@ -3,7 +3,7 @@ import os
 import re
 import zipfile
 
-current_path = os.path.dirname(os.path.abspath(__file__))
+current_path = os.path.dirname(os.path.abspath( __file__))
 
 out_zip_name = os.path.join(current_path, os.path.basename(current_path) + ".esriaddin")
 
@@ -32,7 +32,7 @@ with zipfile.ZipFile(out_zip_name, 'w', zipfile.ZIP_DEFLATED) as zip_file:
 
 
 import subprocess
-
+    
 repo_folder=os.path.join(os.path.dirname(__file__), r"Install\dev\scripts")
 repo_prod=r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminerodev'
 

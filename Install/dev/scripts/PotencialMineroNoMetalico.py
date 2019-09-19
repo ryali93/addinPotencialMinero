@@ -9,11 +9,8 @@ arcpy.env.overwriteOutput = True
 class PotencialMineroNoMetalico(object):
     tipo_pot = 'no metalico'
 
-    # ws = r'D:\RYali\TDR5\4product\borrar\PM_PIURA_5b47d4da-50f9-4df1-b7b1-5d80490eee3f\DRME_PM.gdb'
+    # ws = r'D:\RYali\TDR5\4product\borrar\PM_PIURA_4eae7c56-f9cf-40fe-9786-637b7640d316\DRME_PM.gdb'
     # pixel = '300'
-    # exportar = 'true'
-    # publicar = 'true'
-    # visualizar = 'true'
     ws = arcpy.GetParameterAsText(0)
     pixel = arcpy.GetParameterAsText(1)
     exportar = arcpy.GetParameterAsText(2)
@@ -40,10 +37,10 @@ class PotencialMineroNoMetalico(object):
     r_litologia = rmi_ras_litologia(ws)
     r_catastro_minero = rmi_ras_concmin(ws)
     r_sensor_remoto = rmi_ras_sensores(ws)
-    r_sustancia = rmi_var_sustancias(ws)
+    r_sustancia = rmi_ras_sustancias(ws)
 
     pm_factor = rmi_tb_factor(ws)
-    # r_potencial_minero = ras_potencial_minero(ws)
+    r_potencial_minero = ras_potencial_minero_no_metalico(ws)
 
     src = [i[0] for i in arcpy.da.SearchCursor(config.path, [config.zona])][0]
 
@@ -65,7 +62,6 @@ class PotencialMineroNoMetalico(object):
 
     def method_litologia(self):
         """
-
         :return:
         """
         arcpy.AddMessage(self.messages.eval_lito)
@@ -197,7 +193,7 @@ class PotencialMineroNoMetalico(object):
                                          self.pixel)
 
     def method_sensores_remotos(self):
-        arcpy.AddMessage(self.messages.eval_sr)
+        arcpy.AddMessage(self.messages.eval_sr_rmi)
         self.pre_treatment(self.sensor_remoto.path, self.v_sensor_remoto.path, self.r_sensor_remoto.path)
 
         arcpy.AddMessage(self.messages.gen_task_save_fc)
@@ -244,34 +240,94 @@ class PotencialMineroNoMetalico(object):
 
         arcpy.AddField_management(feature, self.v_sustancia.influencia, 'DOUBLE')
 
-        fields = [self.v_sustancia.influencia]
+        fields = [self.v_sustancia.sustancia, self.v_sustancia.influencia, self.v_sustancia.valor, self.v_sustancia.grado]
 
         sust_grado = rmi_tb_sustancias(self.ws)
 
-        fields_grado = [sust_grado.influencia, sust_grado.valor, sust_grado.grado]
+        fields_grado = [sust_grado.sustancia, sust_grado.influencia, sust_grado.valor, sust_grado.grado]
 
         grade = [i for i in arcpy.da.SearchCursor(sust_grado.path, fields_grado)]
 
         arcpy.AddMessage(self.messages.eval_sust_task_radio)
 
+        with arcpy.da.UpdateCursor(feature, fields) as cursor:
+            for i in cursor:
+                for x in grade:
+                    if i[0] == x[0]:
+                        i[1] = x[1]
+                        i[2] = x[2]
+                        i[3] = x[3]
+                cursor.updateRow(i)
+            del cursor
 
+        arcpy.AddMessage(self.messages.eval_sust_task_influencia)
+        influencia = arcpy.Buffer_analysis(feature, 'in_memory\\buffer', self.v_sustancia.influencia)
 
+        arcpy.Append_management(influencia, self.v_sustancia.path, 'NO_TEST')
+
+        erase = arcpy.Erase_analysis(self.limite.path, self.v_sustancia.path, 'in_memory\\erase')
+
+        arcpy.AddMessage(self.messages.gen_task_limites)
+        arcpy.Append_management(erase, self.v_sustancia.path, 'NO_TEST')
+
+        arcpy.AddMessage(self.messages.gen_task_grade)
+        with arcpy.da.UpdateCursor(self.v_sustancia.path, fields) as cursor:
+            for i in cursor:
+                for x in grade:
+                    if i[0] == x[0]:
+                        i[2] = x[2]
+                        i[3] = x[3]
+                if i[0] == None:
+                    i[2] = 1
+                cursor.updateRow(i)
+            del cursor
+
+        arcpy.AddMessage(self.messages.gen_task_save_ra)
+        arcpy.PolygonToRaster_conversion(self.v_sustancia.path, self.v_sustancia.valor,
+                                         self.r_sustancia.path, "CELL_CENTER", self.v_sustancia.valor,
+                                         self.pixel)
 
     def get_no_metalic_potential(self):
         arcpy.AddMessage(self.messages.eval_pm)
+        if arcpy.Exists(self.r_potencial_minero.path):
+            arcpy.Delete_management(self.r_potencial_minero.path)
+
+        arcpy.env.outputCoordinateSystem = 4326
+        fields = [self.pm_factor.nom_ras, self.pm_factor.factor]
+
+        arcpy.AddMessage(self.messages.eval_pm_task)
+        arcpy.CheckOutExtension("spatial")
+
+        values = [arcpy.sa.Raster(os.path.join(self.ws, i[0])) * i[1] for i in
+                  arcpy.da.SearchCursor(self.pm_factor.path, fields) if arcpy.Exists(os.path.join(self.ws, i[0]))]
+
+        pm = sum(values)
+
+        arcpy.AddMessage('\t   - Ponderacion:')
+        for i in arcpy.da.SearchCursor(self.pm_factor.path, fields):
+            if arcpy.Exists(os.path.join(self.ws, i[0])):
+                arcpy.AddMessage('\t     * {:<30} {:>10}'.format(i[0], i[1]))
+
+        arcpy.AddMessage(self.messages.gen_task_save_ra)
+        pm.save(self.r_potencial_minero.path)
+        arcpy.CheckInExtension("spatial")
+
+        arcpy.env.outputCoordinateSystem = self.src
+
+        arcpy.SetParameterAsText(5, self.r_potencial_minero.path)
 
     def main(self):
         """
-
         :return:
         """
         arcpy.AddMessage(self.messages.init_process)
         try:
             self.value_resources()
             self.method_litologia()
+            self.method_sustancias()
             self.method_concesiones()
-            self.method_accesos()
             self.method_sensores_remotos()
+            self.method_accesos()
             self.get_no_metalic_potential()
             arcpy.AddMessage(self.messages.end_process)
         except Exception as e:

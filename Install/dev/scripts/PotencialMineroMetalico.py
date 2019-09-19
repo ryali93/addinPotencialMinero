@@ -39,7 +39,7 @@ class PotencialMineroMetalico(object):
     r_sensor_remoto = pmm_ras_sensores(ws)
 
     pm_factor = pmm_tb_factor(ws)
-    r_potencial_minero = ras_potencial_minero(ws)
+    r_potencial_minero = ras_potencial_minero_metalico(ws)
 
     src = [i[0] for i in arcpy.da.SearchCursor(config.path, [config.zona])][0]
 
