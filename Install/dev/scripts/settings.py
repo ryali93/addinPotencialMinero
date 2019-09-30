@@ -24,7 +24,9 @@ TOOL_NAME = {
     'T10': 'rmiConcesiones',
     'T11': 'rmiSensoresRemotos',
     'T12': 'rmiAccesos',
-    'T13': 'PotencialMineroNoMetalico'
+    'T13': 'PotencialMineroNoMetalico',
+
+    'T14': 'PotencialMinero'
 }
 USER_GUIDE = os.path.join(STATIC, 'potencial-minero-user-guide.pdf')
 

@@ -53,3 +53,7 @@ class Messages(object):
     eval_vias = u'\n\t5. Evaluación de variable de Accesos'
     eval_vias_task_radio = u'\t   - Estimando el radio de influencia para cada vía'
     eval_vias_task_influencia = u'\t   - Calculando las zonas de influencia'
+
+    """ Calculo del Potencial Minero """
+
+    eval_potmin = u'\t  - Evaluación de parámetros del Potencial Minero'

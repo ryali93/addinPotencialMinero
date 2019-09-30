@@ -768,7 +768,7 @@ class rmi_ras_sensores(pmm_ras_ugeol):
         return 'RMI_VAR_RAS_SensorRemoto'
 
 ########################################################################
-# Potencial Minero
+# Potencial Minero Metalico
 class tb_config(object):
     region = 'REGION'
     zona = 'ZONA'
@@ -852,3 +852,27 @@ class ras_potencial_minero_no_metalico(pmm_ras_ugeol):
     @property
     def name(self):
         return 'PM_RAS_PotencialMineroNoMetalico'
+
+# Potencial Minero
+class pm_tb_factor(object):
+    nom_ras = 'NOM_RAS'
+    factor = 'FACTOR'
+
+    def __init__(self, ws):
+        self.ws = ws
+
+    @property
+    def name(self):
+        return 'TB_PM_Factor'
+
+    @property
+    def path(self):
+        return os.path.join(self.ws, self.name)
+
+class ras_potencial_minero(pmm_ras_ugeol):
+    def __init__(self, ws):
+        super(self.__class__, self).__init__(ws)
+
+    @property
+    def name(self):
+        return 'PM_RAS_PotencialMinero'
