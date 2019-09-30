@@ -9,8 +9,6 @@ arcpy.env.overwriteOutput = True
 class PotencialMineroNoMetalico(object):
     tipo_pot = 'no metalico'
 
-    # ws = r'D:\RYali\TDR5\4product\borrar\PM_PIURA_4eae7c56-f9cf-40fe-9786-637b7640d316\DRME_PM.gdb'
-    # pixel = '300'
     ws = arcpy.GetParameterAsText(0)
     pixel = arcpy.GetParameterAsText(1)
     exportar = arcpy.GetParameterAsText(2)
@@ -27,7 +25,7 @@ class PotencialMineroNoMetalico(object):
     sensor_remoto = rmi_gpo_sensores(ws)
     sustancia = rmi_gpt_sustancias(ws)
 
-    var_litologia = rmi_var_litologia(ws)
+    v_litologia = rmi_var_litologia(ws)
     v_accesos = rmi_var_accesos(ws)
     v_catastro_minero = rmi_var_concmin(ws)
     v_sensor_remoto = rmi_var_sensores(ws)
@@ -66,10 +64,10 @@ class PotencialMineroNoMetalico(object):
         """
         arcpy.AddMessage(self.messages.eval_lito)
 
-        self.pre_treatment(self.litologia.path, self.var_litologia.path, self.r_litologia.path)
+        self.pre_treatment(self.litologia.path, self.v_litologia.path, self.r_litologia.path)
 
         arcpy.AddMessage(self.messages.gen_task_save_fc)
-        arcpy.Append_management(self.litologia.path, self.var_litologia.path, 'NO_TEST')
+        arcpy.Append_management(self.litologia.path, self.v_litologia.path, 'NO_TEST')
 
         arcpy.AddMessage(self.messages.gen_task_save_ra)
         arcpy.PolygonToRaster_conversion(self.litologia.path, self.litologia.valor,
