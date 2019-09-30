@@ -34,7 +34,7 @@ with zipfile.ZipFile(out_zip_name, 'w', zipfile.ZIP_DEFLATED) as zip_file:
 import subprocess
     
 repo_folder=os.path.join(os.path.dirname(__file__), r"Install\dev\scripts")
-repo_prod=r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminerodev'
+repo_prod=r'\\srvfs01\bdgeocientifica$\Addins_Geoprocesos\PotencialMinero\pminero'
 
 print("xcopy {} {} /Y".format(repo_folder, repo_prod))
 subprocess.call("xcopy {} {} /Y".format(repo_folder, repo_prod), shell=False)
